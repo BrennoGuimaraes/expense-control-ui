@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,7 @@ export default function Page() {
   const [error, setError] = useState("");
 
   async function handleSubmit(e: any) {
-    debugger
+    debugger;
     try {
       // const data = await loginApi(login, password);
       // console.log("Logado!", data);
@@ -40,9 +40,7 @@ export default function Page() {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your login your account
-          </CardDescription>
+          <CardDescription>Enter your login your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
@@ -54,16 +52,17 @@ export default function Page() {
                   type="login"
                   required
                   onChange={(e) => setLogin(e.target.value)}
-
                 />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required 
-                                  onChange={(e) => setPassword(e.target.value)}
-
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>

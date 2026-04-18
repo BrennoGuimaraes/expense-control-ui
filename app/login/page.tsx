@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { loginApi } from "api/api.js";
 
@@ -15,23 +15,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: any) {
-    debugger
     try {
       const data = await loginApi(login, password);
-        redirect("/register")
-      
+
+      toast.success("Welcome back! Login successful.", {
+        position: "bottom-left",
+        style: {
+          backgroundColor: "green",
+          color: "white",
+        },
+      });
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
+        console.log(err);
       } else {
         setError("Erro inesperado");
       }
@@ -44,11 +56,11 @@ export default function Page() {
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your details to access your account
           </CardDescription>
           <CardAction>
             <Link href="/register">
-            <Button variant="link" >Sign Up</Button>
+              <Button variant="link">Sign Up</Button>
             </Link>
           </CardAction>
         </CardHeader>
@@ -62,7 +74,6 @@ export default function Page() {
                   type="login"
                   required
                   onChange={(e) => setLogin(e.target.value)}
-
                 />
               </div>
               <div className="grid gap-2">
@@ -75,9 +86,11 @@ export default function Page() {
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required 
-                                  onChange={(e) => setPassword(e.target.value)}
-
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
