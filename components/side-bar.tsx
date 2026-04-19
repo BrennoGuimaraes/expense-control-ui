@@ -26,7 +26,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-4">
         <h2 className="text-lg font-semibold">Expense Control</h2>
-        <p className="text-sm text-muted-foreground">Olá, Brenno!</p>
+        <p className="text-sm text-muted-foreground">Olá, !</p>
       </SidebarHeader>
 
       <SidebarContent>
