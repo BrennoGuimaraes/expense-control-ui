@@ -76,7 +76,7 @@ export default function PieChartWithPaddingAngle({
         y={y}
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize={12}
+        fontSize={16}
         fill="#555"
       >
         {percent}%

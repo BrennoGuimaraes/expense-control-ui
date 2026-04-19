@@ -22,7 +22,6 @@ export default function Page() {
   const [error, setError] = useState("");
 
   async function handleSubmit(e: any) {
-    debugger;
     try {
       // const data = await loginApi(login, password);
       // console.log("Logado!", data);
