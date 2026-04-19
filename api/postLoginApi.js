@@ -1,7 +1,7 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 
-export async function loginApi(login, password) {
+export async function postLoginApi(login, password) {
 
     const response = await fetch(`${API_URL}/users/login`, {
     method: "POST",

@@ -1,6 +1,6 @@
 "use client";
 
-import { loginApi } from "api/api.js";
+import { postLoginApi } from "api/postLoginApi";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,8 @@ export default function Page() {
 
   async function handleSubmit(e: any) {
     try {
-      const data = await loginApi(login, password);
+      const data = await postLoginApi(login, password);
+      localStorage.setItem("token", data.token);
 
       toast.success("Welcome back! Login successful.", {
         position: "bottom-left",
@@ -41,6 +42,16 @@ export default function Page() {
         router.push("/home");
       }, 2000);
     } catch (err) {
+      toast.error(
+        "Login failed. Please check your credentials and try again.",
+        {
+          position: "bottom-left",
+          style: {
+            backgroundColor: "red",
+            color: "white",
+          },
+        },
+      );
       if (err instanceof Error) {
         setError(err.message);
         console.log(err);
