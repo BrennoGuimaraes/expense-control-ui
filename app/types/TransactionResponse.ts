@@ -1,7 +1,7 @@
 export type TransactionResponse = {
   description: string;
   amount: number;
-  type: String;
+  category: string;
   date: string;
-  accountId: number;
+  // accountId: number;
 }
