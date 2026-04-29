@@ -1,4 +1,5 @@
 export type CategoriesWithPercentResponse = {
-  nameType: string;
+  category: string;
   percent: number;
 }
+  
