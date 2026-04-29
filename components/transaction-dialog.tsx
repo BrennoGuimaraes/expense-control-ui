@@ -7,13 +7,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SelectData } from "./select";
+import { SelectData } from "./select-category";
 import { useState } from "react";
+import { CategoriesResponse } from "@/app/types/CategoriesResponse";
+import { DatePicker } from "./date-picker";
+
+type TransactionDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  categories: CategoriesResponse[];
+  loadingCategories?: boolean;
+};
 
 function formatCurrency(digits: string): string {
   const number = parseInt(digits || "0", 10);
@@ -23,7 +31,12 @@ function formatCurrency(digits: string): string {
   }).format(number / 100);
 }
 
-export function TransactionDialog() {
+export function TransactionDialog({
+  open,
+  onOpenChange,
+  categories,
+  loadingCategories = false,
+}: TransactionDialogProps) {
   const [description, setDescription] = useState("");
   const [amountDisplay, setAmountDisplay] = useState("R$ 0,00");
   const [amountRaw, setAmountRaw] = useState("");
@@ -41,10 +54,7 @@ export function TransactionDialog() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Create Transaction</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Create Transaction</DialogTitle>
@@ -78,8 +88,9 @@ export function TransactionDialog() {
             </Field>
 
             <Field>
-              <SelectData nome="teste" selectDados="[teste]" />
+              <SelectData categories={categories} loading={loadingCategories} />
             </Field>
+            <DatePicker></DatePicker>
           </FieldGroup>
 
           <DialogFooter className="mt-4">
