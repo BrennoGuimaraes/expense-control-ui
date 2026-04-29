@@ -61,7 +61,7 @@ export function TransactionDialog() {
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Ex: Supermercado"
+                placeholder="Ex: Debit purchase - BANCA UNIAO	"
               />
             </Field>
 
