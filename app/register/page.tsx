@@ -1,5 +1,5 @@
 "use client";
-
+import { postRegisterApi } from "@/api/postRegisterApi";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,21 +13,55 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Link from "next/link";
+import { RegisterRequest } from "../types/RegisterRequest";
+import { toast } from "sonner";
 
 export default function Page() {
+  const router = useRouter();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: any) {
     try {
-      // const data = await loginApi(login, password);
-      // console.log("Logado!", data);
+      const body: RegisterRequest = {
+        login: login,
+        name: name,
+        password: password,
+      };
+      const data = await postRegisterApi(body);
+
+      localStorage.setItem("token", data.token);
+
+      toast.success("Welcome! Register successful.", {
+        position: "bottom-left",
+        style: {
+          backgroundColor: "green",
+          color: "white",
+        },
+      });
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000);
+      console.log("Logado!", data);
     } catch (err) {
+      toast.error(
+        "Register failed. Please check your credentials and try again.",
+        {
+          position: "bottom-left",
+          style: {
+            backgroundColor: "red",
+            color: "white",
+          },
+        },
+      );
       if (err instanceof Error) {
         setError(err.message);
+        console.log(err);
       } else {
         setError("Erro inesperado");
       }
@@ -38,8 +72,10 @@ export default function Page() {
     <div className="flex min-h-svh items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>Enter your login your account</CardDescription>
+          <CardTitle>Register your account</CardTitle>
+          <CardDescription>
+            Enter your details to create your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form>
@@ -51,6 +87,15 @@ export default function Page() {
                   type="login"
                   required
                   onChange={(e) => setLogin(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="login">Name</Label>
+                <Input
+                  id="name"
+                  type="name"
+                  required
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
