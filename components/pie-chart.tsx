@@ -1,8 +1,8 @@
 import { Pie, PieChart, Sector, Tooltip } from "recharts";
-import { TypesWithPercentResponse } from "@/app/types/TypesWithPercentResponse";
+import { CategoriesWithPercentResponse } from "@/app/types/CategoriesWithPercentResponse";
 
 interface Props {
-  types: TypesWithPercentResponse[];
+  categoriesWithPercent: CategoriesWithPercentResponse[];
   isAnimationActive?: boolean;
 }
 
@@ -46,11 +46,12 @@ const renderCustomShape = (props: any) => {
 };
 
 export default function PieChartWithPaddingAngle({
-  types,
+  categoriesWithPercent,
   isAnimationActive = true,
 }: Props) {
-  const data = types.map((t, index) => ({
-    name: t.nameType,
+  debugger;
+  const data = categoriesWithPercent.map((t, index) => ({
+    name: t.category,
     value: t.percent,
     fill: COLORS[index % COLORS.length],
   }));

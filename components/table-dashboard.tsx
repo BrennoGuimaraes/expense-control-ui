@@ -4,7 +4,6 @@ import { TransactionResponse } from "@/app/types/TransactionResponse";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -32,7 +31,6 @@ export function TableDashboard({ transactions }: Props) {
   return (
     <div>
       <Table>
-        <TableCaption>A list of your recent transactions.</TableCaption>
         <TableHeader>
           <TableRow>
             {columns.map((col) => (
