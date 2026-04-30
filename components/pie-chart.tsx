@@ -49,7 +49,6 @@ export default function PieChartWithPaddingAngle({
   categoriesWithPercent,
   isAnimationActive = true,
 }: Props) {
-  debugger;
   const data = categoriesWithPercent.map((t, index) => ({
     name: t.category,
     value: t.percent,

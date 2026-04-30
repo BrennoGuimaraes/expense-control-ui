@@ -16,9 +16,9 @@ import { LayoutDashboard, Receipt, Tags, LogOut } from "lucide-react";
 import Link from "next/link";
 
 const menuItems = [
-  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Gastos", href: "/expenses", icon: Receipt },
-  { title: "Categorias", href: "/categories", icon: Tags },
+  { title: "Dashboard", href: "/home", icon: LayoutDashboard },
+  // { title: "Gastos", href: "/expenses", icon: Receipt },
+  // { title: "Categorias", href: "/categories", icon: Tags },
 ];
 
 export function AppSidebar() {

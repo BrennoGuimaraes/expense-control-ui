@@ -14,7 +14,11 @@ import {
 import { useState } from "react";
 import { Field, FieldLabel } from "./ui/field";
 
-export function DatePicker() {
+type DatePickerProps = {
+  onDateValue: React.Dispatch<React.SetStateAction<Date | undefined>>;
+};
+
+export function DatePicker({ onDateValue }: DatePickerProps) {
   const [date, setDate] = useState<Date>();
 
   return (
@@ -32,7 +36,14 @@ export function DatePicker() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
-          <Calendar mode="single" selected={date} onSelect={setDate} />
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={(date) => {
+              setDate(date);
+              onDateValue(date);
+            }}
+          />
         </PopoverContent>
       </Popover>
     </Field>

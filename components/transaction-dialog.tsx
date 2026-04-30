@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +14,7 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectData } from "./select-category";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { CategoriesResponse } from "@/app/types/CategoriesResponse";
 import { DatePicker } from "./date-picker";
 
@@ -40,17 +42,19 @@ export function TransactionDialog({
   const [description, setDescription] = useState("");
   const [amountDisplay, setAmountDisplay] = useState("R$ 0,00");
   const [amountRaw, setAmountRaw] = useState("");
+  const [date, setDate] = useState<Date>();
+  const [category, setCategory] = useState<string>();
 
-  function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
     const digits = e.target.value.replace(/\D/g, "");
     setAmountRaw(digits);
     setAmountDisplay(formatCurrency(digits));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const reais = parseInt(amountRaw || "0", 10) / 100;
-    console.log({ description, amount: reais });
+    console.log({ description, amount: reais, date, category });
   }
 
   return (
@@ -88,9 +92,13 @@ export function TransactionDialog({
             </Field>
 
             <Field>
-              <SelectData categories={categories} loading={loadingCategories} />
+              <SelectData
+                onSelectValue={setCategory}
+                categories={categories}
+                loading={loadingCategories}
+              />
             </Field>
-            <DatePicker></DatePicker>
+            <DatePicker onDateValue={setDate}></DatePicker>
           </FieldGroup>
 
           <DialogFooter className="mt-4">
