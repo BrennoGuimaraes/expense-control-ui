@@ -53,6 +53,7 @@ export default function Dashboard() {
   const getTransactions = async () => {
     try {
       const data = await getTransactionsApi();
+      debugger;
       setTransactions(data);
     } catch (error) {
       toast.error("Error loading chart. Please try again.", {
