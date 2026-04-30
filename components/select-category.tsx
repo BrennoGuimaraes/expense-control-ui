@@ -1,4 +1,6 @@
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+"use client";
+
+import { Field, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -10,15 +12,20 @@ import {
 import { CategoriesResponse } from "@/app/types/CategoriesResponse";
 
 type SelectDataProps = {
+  onSelectValue: React.Dispatch<React.SetStateAction<string | undefined>>;
   categories: CategoriesResponse[];
   loading?: boolean;
 };
 
-export function SelectData({ categories, loading = false }: SelectDataProps) {
+export function SelectData({
+  onSelectValue,
+  categories,
+  loading = false,
+}: SelectDataProps) {
   return (
     <Field className="w-full max-w-xs">
       <FieldLabel>Category</FieldLabel>
-      <Select>
+      <Select onValueChange={onSelectValue}>
         <SelectTrigger>
           <SelectValue
             placeholder={loading ? "Loading categories..." : "Choose category"}

@@ -18,6 +18,26 @@ interface Props {
 
 const PAGE_SIZE = 7;
 
+function formatAmount(value: TransactionResponse["amount"]) {
+  const numericValue =
+    typeof value === "number" ? value : Number.parseFloat(value);
+
+  if (Number.isNaN(numericValue)) {
+    return String(value ?? "-");
+  }
+
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(numericValue);
+}
+
+function getAmountValue(value: TransactionResponse["amount"]) {
+  return typeof value === "number" ? value : Number.parseFloat(value);
+}
+
 export function TableDashboard({ transactions }: Props) {
   const [page, setPage] = useState(0);
   const columns = transactions.length > 0 ? Object.keys(transactions[0]) : [];
@@ -44,8 +64,23 @@ export function TableDashboard({ transactions }: Props) {
           {paginated.map((transaction, i) => (
             <TableRow key={i}>
               {columns.map((col) => (
-                <TableCell key={col}>
-                  {String(transaction[col as keyof TransactionResponse] ?? "-")}
+                <TableCell
+                  key={col}
+                  className={
+                    col === "amount"
+                      ? getAmountValue(transaction.amount) < 0
+                        ? "text-red-600"
+                        : getAmountValue(transaction.amount) > 0
+                          ? "text-green-600"
+                          : ""
+                      : ""
+                  }
+                >
+                  {col === "amount"
+                    ? formatAmount(transaction.amount)
+                    : String(
+                        transaction[col as keyof TransactionResponse] ?? "-",
+                      )}
                 </TableCell>
               ))}
             </TableRow>
